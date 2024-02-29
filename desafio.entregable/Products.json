@@ -1,0 +1,57 @@
+[
+    {
+      "title": "iPhone 15",
+      "description": "**Pantalla 6.1 pulgadas** | Chip A16 Bionic | cámara dual de 12 MP | 6/128 GB ",
+      "price": 899 ,
+      "thumbnail": "iphone15.jpg",
+      "code": "IP15",
+      "stock": 50,
+      "id": 1
+    },
+    {
+      "title": "iPhone 15 Pro",
+      "description": "**Pantalla 6.1 pulgadas** | Chip A17 Pro | cámara triple de 12 MP | 8/128 GB ",
+      "price": 999 ,
+      "thumbnail": "iphone15pro.jpg",
+      "code": "IP15P",
+      "stock": 30,
+      "id": 2
+    },
+    {
+      "title": "iPhone 15 Pro Max",
+      "description": "**Pantalla 6.7 pulgadas** | Chip A17 Pro | cámara triple de 12 MP | 8/256 GB ",
+      "price": 1099 ,
+      "thumbnail": "iphone15promax.jpg",
+      "code": "IP15PM",
+      "stock": 20,
+      "id": 3
+    },
+    {
+      "title": "iPhone 14",
+      "description": "**Pantalla 6.1 pulgadas** | Chip A15 Bionic | cámara dual de 12 MP | 128 GB ",
+    "price": 799 ,
+      "thumbnail": "iphone14.jpg",
+      "code": "IP14",
+      "stock": 50,
+      "id": 4
+    },
+    {
+      "title": "iPhone 14 Pro",
+      "description": "**Pantalla 6.1 pulgadas** | Chip A15 Bionic | cámara triple de 12 MP | 128 GB ",
+      "price": 899 ,
+      "thumbnail": "iphone14pro.jpg",
+      "code": "IP14P",
+      "stock": 30,
+      "id": 5
+    },
+    {
+      "title": "iPhone 14 Pro Max",
+      "description": "**Pantalla 6.7 pulgadas** | Chip A15 Bionic | cámara triple de 12 MP | 128 GB ",
+      "price": 999 ,
+      "thumbnail": "iphone14promax.jpg",
+      "code": "IP14PM",
+      "stock": 20,
+      "id": 6
+    }
+  ]
+  

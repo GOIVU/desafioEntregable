@@ -1,107 +1,75 @@
 
+const fs = require('fs');
+
 class ProductManager {
-
-   //static CantidadDeProductos=0
-
-    constructor([]){
-        this.Product=[]
-
-    /*(title, description, price, thumbnail, code,stock){
-        this.title=title
-        this.description=description
-        this.price=price
-        this.thumbnail=thumbnail
-        this.code=code
-        this.stock=stock*/
-
-        addProduct(title, description, price, thumbnail, code, stock){
-            let existe=this.Product.find(producto=>producto.code===code)
-            if(existe){
-                console.log(`El producto ${code} ya esta cargado...!!!`)
-                return
-                }
-            let id=1
-            if(this.Product.length>0){
-                id=this.Product[this.Product.length-1].id+1
-            }
-            let nuevoProducto={id,title, description, price, thumbnail, code,stock}
-            this.Product.push(nuevoProducto)
-        }
-        ProductManager.CantidadDeProductos++
+    constructor(path) {
+        this.path = path;
+        this.productIdCounter = 1;
+        this.loadFromFile();
     }
 
-    static TotalProductos(){
-        return this.CantidadDeProductos
-    }
-
-    getProduct(){
-        return this.Product
-    }
-
-    getProductByid(id){
-        let Producto=this.Product.find(p=>p.id===id)
-        if(!Producto){
-            console.log(`No hay productos con el id ${id}...!!!`)
-            return
-        }
-    }
-
-    updateProdut(title, description, price, thumbnail, code, stock){
-        let indiceProducto=this.Product.findIndex(producto=>producto.id===id)
-        if(existe){
-            console.log(`El productocon id ${id} ya esta cargado...!!!`)
-            return
-            }
-        
-        let nuevoId=this.Product[this.Product.length-1].id+1
-        let nuevoProducto={
-            ...this.Product[indiceProducto],
-            id:nuevoId
-        }
-        this.Product.push(nuevoProducto)
-    }
-
-    deleteProduct(id) {
-        const indiceProducto = this.Product.findIndex(producto=>producto.id === id);
-        if (indiceProducto === -1) {
-            console.log(`El producto con id ${id} fue eliminado...!!!`);
+    addProduct(productData) {
+        if (!productData.title || !productData.description || !productData.price || !productData.thumbnail || !productData.code || !productData.stock) {
+            console.log("Por favor completar todos los campos***.");
             return;
         }
-    
-        this.products.splice(productIndex, 1);
-        ProductManager.CantidadDeProductos--
+
+        const existingProduct = this.getProductByCode(productData.code);
+        if (existingProduct) {
+            console.log(`El producto con el código ${productData.code} ya existe.`);
+            return;
+        }
+
+        productData.id = this.productIdCounter++;
+        this.saveToFile(productData);
+        console.log(`Has agregado el producto ${productData.title}.`);
     }
-} 
 
-let pm=new ProductManager()
+    getProductByCode(code) {
+        const products = this.getAllProducts();
+        return products.find(product => product.code === code);
+    }
 
-pm.addProduct("Iphone15","8 gb ram","u$d1.900","...","40","100")
-pm.addProduct("Iphone14","6 gb ram","u$d1.500","...","30","100")
-pm.addProduct("Iphone13","6 gb ram","u$d1.300","...","20","100")
-pm.addProduct("Iphone12","4 gb ram","u$d1.100","...","10","100")
+    getAllProducts() {
+        try {
+            const data = fs.readFileSync(this.path, 'utf8');
+            return JSON.parse(data);
+        } catch (error) {
+            console.log("Ha ocurrido un error al cargar los productos.", error.message);
+            return [];
+        }
+    }
 
-pm.updateProdut(1)
-pm.updateProdut(2)
-pm.updateProdut(3)
-pm.updateProdut(4) 
+    getProductById(id) {
+        const products = this.getAllProducts();
+        const product = products.find(product => product.id === id);
+        if (product) {
+            return product;
+        } else {
+            console.log("No se ha encontrado el producto.");
+            return null;
+        }
+    }
 
-pm.deleteProduct(1)
+    saveToFile(productData) {
+        try {
+            let products = this.getAllProducts();
+            products.push(productData);
+            fs.writeFileSync(this.path, JSON.stringify(products, null, 2));
+            console.log("El producto se ha guardado correctamente");
+        } catch (error) {
+            console.log("Ha ocurrido un error al guardar el producto.", error.message);
+        }
+    }
 
-console.log(pm.getProducs())
-
-console.log(pm.getProducsByid(4))
-
-console.log(pm.deleteProduct(1))
-
-let Producto1 = new ProducManager("Iphone15","12 gb ram","u$d1.500","...","01","100");
-
-const MostrarProducto=(Product=[])=>{
-    if(Product.length===0){
-        console.log("No se han agregado productos por el momento...!!!")
-        return
-    } 
+    loadFromFile() {
+        try {
+            const data = fs.readFileSync(this.path, 'utf8');
+            this.products = JSON.parse(data);
+            console.log("Se ha cargado el producto");
+        } catch (error) {
+            console.log("Ha ocurrido un error al cargar los productos.", error.message);
+            this.products = []; 
+        }
+    }
 }
-
-console.log(ProductManager.CantidadDeProductos)
-
-console.log(ProductManager.TotalProductos())  
